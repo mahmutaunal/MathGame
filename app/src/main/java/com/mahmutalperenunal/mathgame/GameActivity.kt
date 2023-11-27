@@ -44,6 +44,8 @@ class GameActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun createQuestion() {
+        binding.checkButton.isClickable = true
+
         val number1 = Random.nextInt(0, 100)
         val number2 = Random.nextInt(0, 100)
 
@@ -86,6 +88,11 @@ class GameActivity : AppCompatActivity() {
                 updateTimerText()
 
                 userLife--
+
+                if (userLife < 0) {
+                    userLife = 0
+                }
+
                 binding.lifeTextView.text = "$userLife"
                 binding.questionTextView.text = "Sorry, Time is up!"
             }
@@ -128,9 +135,17 @@ class GameActivity : AppCompatActivity() {
                 binding.questionTextView.text = "Congratulations, your answer is correct :)"
             } else {
                 userLife--
+
+                if (userLife < 0) {
+                    userLife = 0
+                }
+
                 binding.lifeTextView.text = "$userLife"
-                binding.questionTextView.text = "Sorry, your answer is wrong :("
+                binding.questionTextView.text = "Sorry, your answer is wrong :( \n" +
+                        "The correct answer is: $correctAnswer"
             }
+
+            binding.checkButton.isClickable = false
         }
     }
 
